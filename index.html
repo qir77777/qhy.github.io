@@ -1,125 +1,127 @@
+<!DOCTYPE html>
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>人工智能学者 QHY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink-primary: #00ff9d;      /* 青绿色 */
-      --ink-secondary: #00b4d8;    /* 靛青色 */
-      --ink-accent: #0077b6;       /* 深青色 */
-      --paper-bg: #f0f0e0;        /* 宣纸底色 */
+      --ink-primary: #80d8ff;      /* 淡蓝色，科技感 */
+      --ink-secondary: #b0bec5;    /* 银灰色，水墨层次 */
+      --ink-accent: #0288d1;       /* 深蓝色，强调色 */
+      --paper-bg: #f5f5f5;         /* 浅灰底色，简洁现代 */
+      --text-color: #212121;       /* 深灰文本，高可读性 */
     }
 
     body {
-      background: linear-gradient(
-        45deg,
-        var(--paper-bg),
-        #e8e4d8
-      );
-      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, var(--paper-bg), #e0e0e0);
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
     }
 
-    /* 水墨星空 */
+    /* 水墨星空背景 */
     .stars {
       position: fixed;
       width: 100vw;
       height: 100vh;
-      filter: contrast(120%) brightness(110%);
+      z-index: 1;
+      filter: contrast(110%) brightness(120%);
     }
 
     .star {
       position: absolute;
       opacity: 0;
-      animation: ink-spread 8s infinite ease-in-out;
-      background: radial-gradient(
-        circle at center,
-        var(--ink-primary),
-        transparent 70%
-      );
-      mix-blend-mode: multiply;
+      animation: ink-spread 10s infinite ease-in-out;
+      background: radial-gradient(circle at center, var(--ink-primary), transparent 70%);
+      mix-blend-mode: screen; /* 更柔和的融合效果 */
       transform-origin: center;
     }
 
-    /* 不同层次的墨点 */
-    .star.small {
-      width: 80px;
-      height: 80px;
-      filter: blur(2px);
-      animation-delay: 1s;
-    }
-    
-    .star.medium {
-      width: 150px;
-      height: 150px;
-      filter: blur(4px);
-      animation-delay: 2s;
-    }
-    
-    .star.large {
-      width: 250px;
-      height: 250px;
-      filter: blur(8px);
-      animation-delay: 3s;
-    }
+    .star.small { width: 60px; height: 60px; filter: blur(2px); animation-delay: 0.5s; }
+    .star.medium { width: 120px; height: 120px; filter: blur(4px); animation-delay: 1s; }
+    .star.large { width: 200px; height: 200px; filter: blur(6px); animation-delay: 2s; }
 
-    /* 水墨动画 */
     @keyframes ink-spread {
-      0% {
-        opacity: 0;
-        transform: scale(0.1) rotate(0deg);
-      }
-      30% {
-        opacity: 0.8;
-        transform: scale(1) rotate(10deg);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.5) rotate(20deg);
-      }
+      0% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+      40% { opacity: 0.7; transform: scale(1) rotate(15deg); }
+      100% { opacity: 0; transform: scale(1.3) rotate(30deg); }
     }
 
-    /* 增加水墨笔触效果 */
+    /* 流星效果 */
+    .meteor {
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(to bottom, var(--ink-accent), transparent);
+      animation: meteor-fall 1s linear forwards;
+      z-index: 2;
+    }
+
+    @keyframes meteor-fall {
+      0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+      100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
+    }
+
+    /* 水墨笔触效果 */
     .brush-stroke {
       position: fixed;
       pointer-events: none;
-      background: linear-gradient(
-        45deg,
-        transparent 60%,
-        var(--ink-secondary) 90%
-      );
+      background: linear-gradient(45deg, transparent 50%, var(--ink-secondary) 90%);
       mix-blend-mode: soft-light;
-      animation: brush-flow 15s linear infinite;
+      animation: brush-flow 12s linear infinite;
+      z-index: 1;
     }
 
     @keyframes brush-flow {
-      from {
-        transform: translateX(-100%) skew(-15deg);
-      }
-      to {
-        transform: translateX(100%) skew(-15deg);
-      }
+      from { transform: translateX(-100%) skew(-10deg); }
+      to { transform: translateX(150%) skew(-10deg); }
     }
 
-    /* 内容区域优化 */
+    /* 内容区域 */
     .content {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    h1 { font-size: 2.2em; color: var(--text-color); margin-bottom: 10px; }
+    h2 { font-size: 1.6em; color: var(--ink-accent); margin-top: 30px; }
+    h3 { font-size: 1.3em; color: var(--text-color); }
+    p { font-size: 1.1em; color: var(--text-color); line-height: 1.8; }
+    a { color: var(--ink-accent); text-decoration: none; transition: color 0.3s ease; }
+    a:hover { color: var(--ink-primary); text-decoration: underline; }
+    blockquote { font-style: italic; color: #757575; border-left: 4px solid var(--ink-accent); padding-left: 15px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+    th { background: var(--paper-bg); color: var(--ink-accent); }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .content { margin: 20px; padding: 20px; }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      p { font-size: 1em; }
     }
   </style>
 </head>
 <body>
   <div class="stars"></div>
-  <div class="brush-stroke" style="top:20%;height:300px;width:200px;"></div>
-  <div class="brush-stroke" style="top:60%;height:200px;width:150px;"></div>
-  <div class="stars"></div>
-  <div class="nebula"></div>
-  <div class="nebula2"></div>
+  <div class="brush-stroke" style="top: 20%; height: 250px; width: 180px;"></div>
+  <div class="brush-stroke" style="top: 60%; height: 180px; width: 120px;"></div>
   <div class="content">
     <h1>人工智能学者 QHY 个人简介</h1>
     <p>AI Scholar QHY Personal Profile</p>
-    <p>Research / Patents / Publications</p>
     <p>研究 / 专利 / 出版物</p>
     <p>
       <a href="https://github.com/qir77777">
@@ -173,94 +175,31 @@
 
   <script>
     const starsContainer = document.querySelector('.stars');
-    const starCount = 100;
+    const starCount = 80;
     const sizes = ['small', 'medium', 'large'];
 
+    // 生成星星
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
       star.classList.add('star', sizes[Math.floor(Math.random() * sizes.length)]);
       star.style.left = `${Math.random() * 100}%`;
       star.style.top = `${Math.random() * 100}%`;
-      star.style.animationDelay = `${Math.random() * 2}s`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
       fragment.appendChild(star);
     }
     starsContainer.appendChild(fragment);
 
+    // 生成流星
     function createMeteor() {
       const meteor = document.createElement('div');
       meteor.classList.add('meteor');
       meteor.style.left = `${Math.random() * 100}%`;
-      meteor.style.top = `${Math.random() * 50}%`;
+      meteor.style.top = `${Math.random() * 40}%`;
       document.body.appendChild(meteor);
       setTimeout(() => meteor.remove(), 1000);
     }
-    setInterval(createMeteor, 3000);
-
-    document.addEventListener('mousemove', (e) => {
-      const nebula = document.querySelector('.nebula');
-      nebula.style.transform = `translate(${e.clientX / 20}px, ${e.clientY / 20}px)`;
-    });
-    // 水墨星生成器
-    function createInkStars() {
-      const container = document.querySelector('.stars');
-      const starTypes = ['small', 'medium', 'large'];
-      const positions = [];
-
-      // 生成随机不重叠位置
-      const getPosition = () => {
-        let x, y;
-        do {
-          x = Math.random() * 95;
-          y = Math.random() * 95;
-        } while (positions.some(pos => 
-          Math.abs(pos.x - x) < 10 && 
-          Math.abs(pos.y - y) < 10
-        ));
-        positions.push({x, y});
-        return [x, y];
-      };
-
-      starTypes.forEach(type => {
-        for (let i = 0; i < (type === 'small' ? 15 : type === 'medium' ? 8 : 4); i++) {
-          const star = document.createElement('div');
-          const [x, y] = getPosition();
-          
-          star.className = `star ${type}`;
-          star.style.left = `${x}%`;
-          star.style.top = `${y}%`;
-          star.style.animationDuration = `${8 + Math.random() * 4}s`;
-          
-          // 随机颜色变化
-          if(Math.random() > 0.7) {
-            star.style.background = `radial-gradient(
-              circle at center,
-              var(--ink-secondary),
-              transparent 70%
-            )`;
-          }
-          
-          container.appendChild(star);
-        }
-      });
-    }
-
-    // 初始化
-    document.addEventListener('DOMContentLoaded', () => {
-      createInkStars();
-      
-      // 动态笔触
-      setInterval(() => {
-        const brush = document.createElement('div');
-        brush.className = 'brush-stroke';
-        brush.style.top = `${Math.random() * 100}%`;
-        brush.style.height = `${100 + Math.random() * 200}px`;
-        brush.style.width = `${50 + Math.random() * 150}px`;
-        document.body.appendChild(brush);
-        
-        setTimeout(() => brush.remove(), 15000);
-      }, 5000);
-    });
+    setInterval(createMeteor, 2500);
   </script>
 </body>
 </html>
