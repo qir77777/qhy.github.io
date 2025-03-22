@@ -31,11 +31,6 @@ description: 人工智能学者QHY的个人简介
   </a>
 </p>
 
-<p align="center">
-    <a href="./README.md">返回主页</a>
-    ·
-    <a href="./README_cn.md">中文主页</a>
-</p>
 
 ## 目录
 - [个人简介](#个人简介)
@@ -60,7 +55,7 @@ QHY是一位专注于人工智能领域的学者，在AI技术研究与应用方
 
 | 论文标题 | 发表年份 | 发表期刊/会议 | 索引类型 |
 | :------ | :------ | :---------- | :------ |
-| 人工智能在现代技术中的应用研究 | 2023 | 国际人工智能与数据科学会议 | EI |
+| 《Real-Time Colorectal Polyp Detection via YOLOv10》 | 2025 | CTIEEM | EI |
 
 ## 专利
 
@@ -70,7 +65,7 @@ QHY是一位专注于人工智能领域的学者，在AI技术研究与应用方
 
 | 专利名称 | 专利号 | 授权年份 | 专利类型 |
 | :------ | :---- | :------ | :------ |
-| 一种基于深度学习的智能识别系统 | CN123456789A | 2022 | 发明专利 |
+|  |  | 2025 | 发明专利 |
 
 ## 社交媒体
 
@@ -100,3 +95,88 @@ QHY在GitHub上分享了多个开源项目，涵盖了机器学习模型、数�
 <p align="center">
   <em>如果您对人工智能领域有兴趣，欢迎通过以上方式与QHY联系交流</em>
 </p>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宇宙星空效果</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a1f 100%);
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    /* 随机星星大小和位置 */
+    .star:nth-child(odd) {
+      width: 2px;
+      height: 2px;
+    }
+
+    .star:nth-child(even) {
+      width: 3px;
+      height: 3px;
+    }
+
+    /* 星云效果 */
+    .nebula {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(150, 100, 200, 0.3), transparent);
+      filter: blur(20px);
+      top: 20%;
+      left: 30%;
+      animation: drift 15s infinite linear;
+    }
+
+    /* 闪烁动画 */
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    /* 漂移动画 */
+    @keyframes drift {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(50px, 50px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <script>
+    // 动态生成星星
+    const starsContainer = document.querySelector('.stars');
+    const starCount = 100;
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
