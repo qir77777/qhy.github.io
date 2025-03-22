@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>优化后的宇宙星空效果</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a1f 100%);
+      overflow: hidden;
+    }
+
+    /* 星星容器 */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 星星样式 */
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    .star.small {
+      width: 1px;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .star.medium {
+      width: 2px;
+      height: 2px;
+      background: white;
+    }
+
+    .star.large {
+      width: 3px;
+      height: 3px;
+      background: #ffeb3b;
+    }
+
+    /* 星云效果 */
+    .nebula {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(150, 100, 200, 0.3), transparent);
+      filter: blur(20px);
+      top: 20%;
+      left: 30%;
+      animation: drift 15s infinite linear;
+    }
+
+    .nebula2 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(100, 150, 200, 0.3), transparent);
+      filter: blur(15px);
+      top: 50%;
+      left: 70%;
+      animation: drift2 20s infinite linear;
+    }
+
+    /* 流星效果 */
+    .meteor {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      box-shadow: 0 0 10px white;
+      animation: meteor 1s linear forwards;
+    }
+
+    /* 动画定义 */
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(50px, 50px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes drift2 {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-50px, -50px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes meteor {
+      0% {
+        transform: translate(0, 0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(300px, 300px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .nebula, .nebula2 {
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+  <div class="nebula2"></div>
+
+  <script>
+    // 动态生成星星
+    const starsContainer = document.querySelector('.stars');
+    const starCount = 100;
+    const sizes = ['small', 'medium', 'large'];
+
+    // 批量创建星星
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star', sizes[Math.floor(Math.random() * sizes.length)]);
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      fragment.appendChild(star);
+    }
+    starsContainer.appendChild(fragment);
+
+    // 随机生成流星
+    function createMeteor() {
+      const meteor = document.createElement('div');
+      meteor.classList.add('meteor');
+      meteor.style.left = `${Math.random() * 100}%`;
+      meteor.style.top = `${Math.random() * 50}%`; // 限制流星出现在上半部分
+      document.body.appendChild(meteor);
+      setTimeout(() => meteor.remove(), 1000);
+    }
+    setInterval(createMeteor, 3000); // 每3秒生成一个流星
+
+    // 鼠标交互：星云跟随鼠标移动
+    document.addEventListener('mousemove', (e) => {
+      const nebula = document.querySelector('.nebula');
+      nebula.style.transform = `translate(${e.clientX / 20}px, ${e.clientY / 20}px)`;
+    });
+  </script>
+</body>
+</html>
