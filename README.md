@@ -96,10 +96,6 @@ QHY在GitHub上分享了多个开源项目，涵盖了机器学习模型、数�
 <p align="center">
   <em>如果您对人工智能领域有兴趣，欢迎通过以上方式与QHY联系交流</em>
 </p>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>宇宙星空效果</title>
   <style>
     body {
       margin: 0;
@@ -178,4 +174,4 @@ QHY在GitHub上分享了多个开源项目，涵盖了机器学习模型、数�
     }
   </script>
 </body>
-</html>
+
