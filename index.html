@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>优化后的宇宙星空效果</title>
+  <title>人工智能学者 QHY</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a1f 100%);
       overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: white;
     }
 
-    /* 星星容器 */
     .stars {
       position: absolute;
       width: 100%;
       height: 100%;
     }
 
-    /* 星星样式 */
     .star {
       position: absolute;
       border-radius: 50%;
@@ -27,25 +27,10 @@
       animation: twinkle 2s infinite alternate;
     }
 
-    .star.small {
-      width: 1px;
-      height: 1px;
-      background: #ccc;
-    }
+    .star.small { width: 1px; height: 1px; background: #ccc; }
+    .star.medium { width: 2px; height: 2px; background: white; }
+    .star.large { width: 3px; height: 3px; background: #ffeb3b; }
 
-    .star.medium {
-      width: 2px;
-      height: 2px;
-      background: white;
-    }
-
-    .star.large {
-      width: 3px;
-      height: 3px;
-      background: #ffeb3b;
-    }
-
-    /* 星云效果 */
     .nebula {
       position: absolute;
       width: 300px;
@@ -68,7 +53,6 @@
       animation: drift2 20s infinite linear;
     }
 
-    /* 流星效果 */
     .meteor {
       position: absolute;
       width: 2px;
@@ -78,7 +62,6 @@
       animation: meteor 1s linear forwards;
     }
 
-    /* 动画定义 */
     @keyframes twinkle {
       0% { opacity: 0.2; }
       100% { opacity: 1; }
@@ -97,22 +80,37 @@
     }
 
     @keyframes meteor {
-      0% {
-        transform: translate(0, 0) rotate(45deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(300px, 300px) rotate(45deg);
-        opacity: 0;
-      }
+      0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+      100% { transform: translate(300px, 300px) rotate(45deg); opacity: 0; }
     }
 
-    /* 响应式设计 */
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .content h1 { font-size: 24px; margin-bottom: 10px; }
+    .content h2 { font-size: 20px; margin-top: 20px; }
+    .content p { font-size: 16px; margin-bottom: 15px; }
+    .content a { color: #ffeb3b; text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+    .content table { margin: 0 auto; border-collapse: collapse; }
+    .content th, .content td { padding: 8px; border: 1px solid #fff; }
+
     @media (max-width: 768px) {
-      .nebula, .nebula2 {
-        width: 150px;
-        height: 150px;
-      }
+      .content { width: 95%; }
+      .content h1 { font-size: 20px; }
+      .content h2 { font-size: 18px; }
+      .content p { font-size: 14px; }
     }
   </style>
 </head>
@@ -120,14 +118,66 @@
   <div class="stars"></div>
   <div class="nebula"></div>
   <div class="nebula2"></div>
+  <div class="content">
+    <h1>人工智能学者 QHY 个人简介</h1>
+    <p>AI Scholar QHY Personal Profile</p>
+    <p>Research / Patents / Publications</p>
+    <p>研究 / 专利 / 出版物</p>
+    <p>
+      <a href="https://github.com/qir77777">
+        <img src="https://img.shields.io/badge/GitHub-qir77777-181717?style=flat&logo=github" alt="GitHub">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/WeChat-qir77773-07C160?style=flat&logo=wechat" alt="WeChat">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/Publications-EI_Paper-4285F4?style=flat" alt="Publications">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/Patents-Invention-FF6F00?style=flat" alt="Patents">
+      </a>
+    </p>
+
+    <h2>个人简介</h2>
+    <p>QHY 是一位专注于人工智能领域的学者，在 AI 技术研究与应用方面拥有丰富的经验。他的研究兴趣包括但不限于机器学习、深度学习、自然语言处理等前沿技术。</p>
+    <blockquote>人工智能不仅是一种技术，更是一种思维方式，它将彻底改变我们与世界交互的方式。</blockquote>
+
+    <h2>研究成果</h2>
+    <p><a href="http://www.haue.edu.cn/info/1034/27254.htm">http://www.haue.edu.cn/info/1034/27254.htm</a></p>
+    <h3>学术论文</h3>
+    <p><a href="http://jsj.haue.edu.cn/info/1018/4026.htm">http://jsj.haue.edu.cn/info/1018/4026.htm</a></p>
+    <p><strong>已发表 EI 索引论文</strong></p>
+    <table>
+      <tr><th>论文标题</th><th>发表年份</th><th>发表期刊/会议</th><th>索引类型</th></tr>
+      <tr><td>《Real-Time Colorectal Polyp Detection via YOLOv10》</td><td>2025</td><td>CTIEEM</td><td>EI</td></tr>
+    </table>
+
+    <h2>专利</h2>
+    <p><strong>发明专利</strong></p>
+    <table>
+      <tr><th>专利名称</th><th>专利号</th><th>授权年份</th><th>专利类型</th></tr>
+      <tr><td></td><td></td><td>2025</td><td>发明专利</td></tr>
+    </table>
+
+    <h2>社交媒体</h2>
+    <h3>微信公众号</h3>
+    <p><strong>q7AGI-克里斯</strong></p>
+    <p>在公众号中，QHY 定期分享人工智能领域的最新研究进展、技术分析以及行业动态，致力于将复杂的 AI 概念以通俗易懂的方式传递给读者。</p>
+    <h3>GitHub</h3>
+    <p><a href="https://github.com/qir77777">github.com/qir77777</a></p>
+    <p>QHY 在 GitHub 上分享了多个开源项目，涵盖了机器学习模型、数据分析工具以及 AI 应用示例，为开源社区贡献了宝贵的资源。</p>
+
+    <h2>联系方式</h2>
+    <p>- <strong>微信号</strong>: qir77773</p>
+    <p>- <strong>GitHub</strong>: <a href="https://github.com/qir77777">github.com/qir77777</a></p>
+    <p><em>如果您对人工智能领域有兴趣，欢迎通过以上方式与 QHY 联系交流</em></p>
+  </div>
 
   <script>
-    // 动态生成星星
     const starsContainer = document.querySelector('.stars');
     const starCount = 100;
     const sizes = ['small', 'medium', 'large'];
 
-    // 批量创建星星
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
@@ -139,18 +189,16 @@
     }
     starsContainer.appendChild(fragment);
 
-    // 随机生成流星
     function createMeteor() {
       const meteor = document.createElement('div');
       meteor.classList.add('meteor');
       meteor.style.left = `${Math.random() * 100}%`;
-      meteor.style.top = `${Math.random() * 50}%`; // 限制流星出现在上半部分
+      meteor.style.top = `${Math.random() * 50}%`;
       document.body.appendChild(meteor);
       setTimeout(() => meteor.remove(), 1000);
     }
-    setInterval(createMeteor, 3000); // 每3秒生成一个流星
+    setInterval(createMeteor, 3000);
 
-    // 鼠标交互：星云跟随鼠标移动
     document.addEventListener('mousemove', (e) => {
       const nebula = document.querySelector('.nebula');
       nebula.style.transform = `translate(${e.clientX / 20}px, ${e.clientY / 20}px)`;
