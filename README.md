@@ -46,9 +46,11 @@ QHY是一位专注于人工智能领域的学者，在AI技术研究与应用方
 > 人工智能不仅是一种技术，更是一种思维方式，它将彻底改变我们与世界交互的方式。
 
 ## 研究成果
+http://www.haue.edu.cn/info/1034/27254.htm
 
 ### 学术论文
 
+http://jsj.haue.edu.cn/info/1018/4026.htm
 <p align="center">
   <strong>已发表EI索引论文</strong>
 </p>
@@ -95,7 +97,6 @@ QHY在GitHub上分享了多个开源项目，涵盖了机器学习模型、数�
 <p align="center">
   <em>如果您对人工智能领域有兴趣，欢迎通过以上方式与QHY联系交流</em>
 </p>
-<!DOCTYPE html>
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
