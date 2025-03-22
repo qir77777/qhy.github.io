@@ -4,7 +4,6 @@ author: SprInec
 description: 人工智能学者QHY的个人简介
 ---
 
-<img src=".assets/logo-spring.png" alt="logo-spring" />
 
 <p align="center">
     人工智能学者QHY个人简介
