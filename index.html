@@ -3,219 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>人工智能学者 祁航宇 — 证书与专利展示</title>
+  <title>人工智能学者祁航宇</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --ink-primary:#80d8ff; --ink-accent:#0288d1; --muted:#616161; --card-radius:12px;
+    :root {
+      --ink-primary: #80d8ff;
+      --ink-secondary: #b0bec5;
+      --ink-accent: #0288d1;
+      --paper-bg: #f5f5f5;
+      --text-color: #212121;
+      --card-radius: 12px;
     }
-    *{box-sizing:border-box}
-    body{margin:0;padding:0;font-family:'Roboto',sans-serif;background:linear-gradient(45deg,#f5f5f5,#e0e0e0);color:#212121;min-height:100vh}
-    .content{max-width:1100px;margin:40px auto;padding:28px;background:rgba(255,255,255,0.98);border-radius:var(--card-radius);box-shadow:0 8px 40px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06)}
-    h1{margin:0 0 8px 0;font-size:1.9rem}
-    p.lead{margin:0 0 18px 0;color:var(--muted)}
-
-    /* Gallery */
-    .gallery-header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .owner{font-weight:700}
-
-    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
-    .thumb{position:relative;overflow:hidden;border-radius:10px;cursor:pointer;border:1px solid rgba(0,0,0,0.06);background:#fafafa}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
-    .thumb:hover img{transform:scale(1.04)}
-    .thumb .caption{position:absolute;left:8px;bottom:8px;padding:6px 10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:6px;font-size:0.9rem}
-
-    /* Featured (3.jpg) larger and highlighted */
-    .thumb.featured{grid-column:span 2;grid-row:span 2;border:2px solid var(--ink-accent);box-shadow:0 10px 30px rgba(2,136,209,0.12)}
-    .badge{position:absolute;top:10px;left:10px;background:var(--ink-accent);color:#fff;padding:6px 8px;border-radius:6px;font-weight:700;font-size:0.85rem}
-
-    /* Responsive */
-    @media (max-width:900px){.gallery{grid-template-columns:repeat(3,1fr)}.thumb.featured{grid-column:span 3;grid-row:span 1}}
-    @media (max-width:600px){.gallery{grid-template-columns:repeat(2,1fr)}.thumb.featured{grid-column:span 2}}
-
-    /* Modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);z-index:1200;padding:20px}
-    .modal.active{display:flex}
-    .modal .box{max-width:1100px;width:100%;max-height:92vh;background:#fff;border-radius:10px;overflow:hidden;display:flex;gap:0}
-    .modal .left{flex:1;display:flex;align-items:center;justify-content:center;background:#000}
-    .modal img{max-width:100%;max-height:92vh;object-fit:contain}
-    .modal .right{width:420px;padding:18px;overflow:auto}
-    .modal h3{margin:0 0 10px 0}
-    .meta{font-size:0.95rem;color:#333;line-height:1.5}
-    .meta dt{font-weight:700}
-    .close-btn{position:absolute;top:18px;right:18px;background:transparent;border:2px solid #fff;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer}
-
-    /* Patent detail blocks */
-    .patent-block{margin-top:22px;padding:14px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfbfb);border:1px solid rgba(0,0,0,0.04)}
-    .patent-block h4{margin:0 0 8px 0;color:var(--ink-accent)}
-    .patent-row{display:flex;flex-wrap:wrap;gap:10px}
-    .patent-row .item{min-width:220px}
-
-    .note{margin-top:12px;color:var(--muted);font-size:0.95rem}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(45deg, var(--paper-bg), #e0e0e0);
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden; position: relative; min-height: 100vh;
+      color: var(--text-color);
+    }
+    /* 背景装饰（保留原有水墨星空与笔触） */
+    .stars { position: fixed; width: 100vw; height: 100vh; z-index: 1; filter: contrast(110%) brightness(120%); }
+    .star { position: absolute; opacity: 0; animation: ink-spread 10s infinite ease-in-out; background: radial-gradient(circle at center, var(--ink-primary), transparent 70%); mix-blend-mode: screen; transform-origin: center; }
+    .star.small { width: 60px; height: 60px; filter: blur(2px); animation-delay: 0.5s; }
+    .star.medium { width: 120px; height: 120px; filter: blur(4px); animation-delay: 1s; }
+    .star.large { width: 200px; height: 200px; filter: blur(6px); animation-delay: 2s; }
+    @keyframes ink-spread { 0%{opacity:0;transform:scale(0.2) rotate(0deg);}40%{opacity:0.7;transform:scale(1) rotate(15deg);}100%{opacity:0;transform:scale(1.3) rotate(30deg);} }
+    .brush-stroke { position: fixed; pointer-events: none; background: linear-gradient(45deg, transparent 50%, var(--ink-secondary) 90%); mix-blend-mode: soft-light; animation: brush-flow 12s linear infinite; z-index: 1; }
+    @keyframes brush-flow { from { transform: translateX(-100%) skew(-10deg);} to { transform: translateX(150%) skew(-10deg);} }
+    /* 内容卡片 */
+    .content { position: relative; z-index: 3; max-width: 1000px; margin: 40px auto; padding: 30px; background: rgba(255,255,255,0.98); border-radius: var(--card-radius); box-shadow: 0 8px 40px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.08); }
+    /* 新的照片布局：使用 grid 在桌面端左右并列，移动端堆叠 */
+    .profile {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    /* 图片样式：固定尺寸、cover、圆角、阴影、点击可放大 */
+    .profile-photo {
+      width: 220px; height: 220px; object-fit: cover; border-radius: 12px; display:block;
+      box-shadow: 0 8px 30px rgba(2,136,209,0.12); border: 1px solid rgba(2,136,209,0.06);
+      cursor: pointer; transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .profile-photo:hover { transform: scale(1.03); box-shadow: 0 14px 40px rgba(2,136,209,0.18); }
+    figure figcaption h1 { font-size: 1.8em; margin: 0 0 6px 0; }
+    figure figcaption p { margin: 0; color: #424242; }
+    /* 当屏幕较窄时：图片居中并缩小、网格变成单列 */
+    @media (max-width: 768px) {
+      .profile { grid-template-columns: 1fr; text-align: center; }
+      .profile-photo { width: 160px; height: 160px; margin: 0 auto; }
+      figure figcaption h1 { font-size: 1.6em; }
+    }
+    /* 轻量级图片放大器（lightbox） */
+    .img-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 1000; background: rgba(0,0,0,0.7); }
+    .img-modal.active { display: flex; }
+    .img-modal img { max-width: 92%; max-height: 92%; border-radius: 8px; box-shadow: 0 12px 60px rgba(0,0,0,0.6); }
+    .img-modal .close-btn { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.08); color: white; border: none; padding: 8px 10px; font-size: 18px; cursor: pointer; border-radius: 6px; }
+    /* 获奖证书展示样式 */
+    .awards-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .award-item {
+      position: relative;
+      cursor: pointer;
+      transition: transform .25s ease;
+    }
+    .award-item:hover { transform: scale(1.05); }
+    .award-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .award-highlight {
+      grid-column: span 2; /* 突出3.jpg，使其跨两列 */
+    }
+    @media (max-width: 768px) {
+      .award-highlight { grid-column: span 1; }
+    }
+    /* 其余排版保留并小幅优化 */
+    h2 { font-size: 1.6em; color: var(--ink-accent); margin-top: 30px; border-bottom: 2px solid var(--ink-accent); padding-bottom: 5px; margin-bottom: 20px; }
+    h3 { font-size: 1.2em; color: var(--text-color); }
+    p { font-size: 1.05em; line-height: 1.7; }
+    a { color: var(--ink-accent); text-decoration: none; position: relative; overflow: hidden; }
+    a::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 100%; height: 2px; background-color: var(--ink-primary); transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
+    a:hover::after { transform: translateX(0); }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+    th { background: var(--paper-bg); color: var(--ink-accent); }
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--ink-accent); color: white; border-radius: 5px; padding: 10px 15px; cursor: pointer; opacity: 0.8; transition: opacity 0.3s ease; z-index: 4; }
+    .back-to-top:hover { opacity: 1; }
   </style>
 </head>
 <body>
+  <div class="stars"></div>
+  <div class="brush-stroke" style="top: 20%; height: 250px; width: 180px;"></div>
+  <div class="brush-stroke" style="top: 60%; height: 180px; width: 120px;"></div>
   <div class="content">
-    <div class="gallery-header">
-      <div>
-        <h1>获奖证书 / 专利展示</h1>
-        <p class="lead">展出: 1.jpg — 8.jpg ；持有人：<span class="owner">祁航宇</span>。已突出显示 <strong>3.jpg</strong>（重点证书）。</p>
+    <!-- 改进点：把照片和标题放在同一个 figure 中，桌面端左右并列，移动端堆叠 -->
+    <figure class="profile">
+      <!-- 添加 alt、loading、并用 class 控制样式。点击会放大为模态图片 -->
+      <img class="profile-photo" id="profilePhoto" src="./lan.jpg" alt="祁航宇 个人照片" loading="lazy">
+      <figcaption>
+        <h1>人工智能学者 祁航宇  个人简介</h1>
+        <p>AI Scholar QHY Personal Profile — 研究 / 专利 / 出版物</p>
+        <p style="margin-top:8px; color:#616161;">祁航宇 中共预备党员 专注于机器学习、深度学习和自然语言处理等领域，热爱运动与健身。</p>
+      </figcaption>
+    </figure>
+    <h2>研究 / 专利 / 出版物</h2>
+    <p>
+      <a href="https://github.com/qir77777">
+        <img src="https://img.shields.io/badge/GitHub-qir77777-181717?style=flat&logo=github" alt="GitHub">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/WeChat-qir77773-07C160?style=flat&logo=wechat" alt="WeChat">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/Publications-EI_Paper-4285F4?style=flat" alt="Publications">
+      </a>
+      <a>
+        <img src="https://img.shields.io/badge/Patents-Invention-FF6F00?style=flat" alt="Patents">
+      </a>
+    </p>
+    <h3>学术论文</h3>
+    <p><a href="http://jsj.haue.edu.cn/info/1018/4026.htm">http://jsj.haue.edu.cn/info/1018/4026.htm</a></p>
+    <p><strong>已发表 EI 索引论文</strong></p>
+    <table>
+      <tr><th>论文标题</th><th>发表年份</th><th>发表期刊/会议</th><th>索引类型</th></tr>
+      <tr><td>《Real-Time Colorectal Polyp Detection via YOLOv10》</td><td>2025</td><td>CTIEEM</td><td>EI</td></tr>
+    </table>
+    <h2>专利</h2>
+    <p><strong>发明专利及实用新型专利</strong></p>
+    <table>
+      <tr><th>专利名称</th><th>专利号/申请号</th><th>授权/申请年份</th><th>专利类型</th><th>申请人</th><th>发明人</th></tr>
+      <tr><td>一种砂轮片缺陷检测装置</td><td>2024228122352</td><td>2024</td><td>实用新型专利</td><td>河南工程学院</td><td>季乐乐,王园园,张梦华,汪伟,祁航宇,孙正阳,孙正豪,赵灵童</td></tr>
+      <tr><td>一种基于改进YOLOv11的结肠息肉检测方法</td><td>202510612178X</td><td>2025</td><td>发明专利</td><td>河南工程学院,郑州大学,河南省肿瘤医院</td><td>王园园,祁航宇,谢希望,李松阳,张梦华,王振龙,马磊,何栎,李辉,杨术果</td></tr>
+    </table>
+    <p><strong>专利文件核实详情：</strong></p>
+    <ul>
+      <li>第一项专利（申请号：2024228122352，申请日：2024年11月19日，申请方案卷号：yqgxa24035）：经核实，国家知识产权局确认收到文件如下：权利要求书 1份1页,权利要求项数 ： 6项 说明书 1份5页 说明书附图 1份2页 说明书摘要 1份1页 专利代理委托书 1份2页 实用新型专利请求书 1份5页</li>
+      <li>第二项专利（申请号：202510612178X，申请日：2025年05月13日，申请方案卷号：202505-0604）：经核实，国家知识产权局确认收到文件如下：权利要求书 1份3页,权利要求项数 ： 10项 说明书 1份12页 说明书附图 1份4页 说明书摘要 1份1页 专利代理委托书 1份3页 发明专利请求书 1份5页 实质审查请求书 文件份数：1 份</li>
+    </ul>
+    <h2>获奖证书</h2>
+    <p>以下是祁航宇的获奖证书展示（突出证书3.jpg）：</p>
+    <div class="awards-gallery">
+      <div class="award-item">
+        <img class="award-img" src="1.jpg" alt="获奖证书1" loading="lazy" onclick="openModal(this.src, this.alt)">
       </div>
-      <div style="text-align:right;min-width:220px;color:var(--muted)">
-        <div>展示用途：个人荣誉与专利证明</div>
-        <div style="margin-top:8px">提示：将图片文件（1.jpg..8.jpg）放在与此 HTML 同一目录</div>
+      <div class="award-item">
+        <img class="award-img" src="2.jpg" alt="获奖证书2" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item award-highlight">
+        <img class="award-img" src="3.jpg" alt="获奖证书3（突出）" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item">
+        <img class="award-img" src="4.jpg" alt="获奖证书4" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item">
+        <img class="award-img" src="5.jpg" alt="获奖证书5" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item">
+        <img class="award-img" src="6.jpg" alt="获奖证书6" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item">
+        <img class="award-img" src="7.jpg" alt="获奖证书7" loading="lazy" onclick="openModal(this.src, this.alt)">
+      </div>
+      <div class="award-item">
+        <img class="award-img" src="8.jpg" alt="获奖证书8" loading="lazy" onclick="openModal(this.src, this.alt)">
       </div>
     </div>
-
-    <!-- Gallery grid: 8 thumbnails, 3.jpg featured -->
-    <div class="gallery" id="gallery">
-      <div class="thumb" data-file="1.jpg" data-title="证书 1">
-        <img src="./1.jpg" alt="证书 1 - 祁航宇">
-        <div class="caption">证书 1</div>
-      </div>
-
-      <div class="thumb" data-file="2.jpg" data-title="证书 2">
-        <img src="./2.jpg" alt="证书 2 - 祁航宇">
-        <div class="caption">证书 2</div>
-      </div>
-
-      <div class="thumb featured" data-file="3.jpg" data-title="重点证书 - 专利 / 荣誉">
-        <div class="badge">重点</div>
-        <img src="./3.jpg" alt="重点证书 3 - 祁航宇">
-        <div class="caption">重点证书 3</div>
-      </div>
-
-      <div class="thumb" data-file="4.jpg" data-title="证书 4">
-        <img src="./4.jpg" alt="证书 4 - 祁航宇">
-        <div class="caption">证书 4</div>
-      </div>
-
-      <div class="thumb" data-file="5.jpg" data-title="证书 5">
-        <img src="./5.jpg" alt="证书 5 - 祁航宇">
-        <div class="caption">证书 5</div>
-      </div>
-
-      <div class="thumb" data-file="6.jpg" data-title="证书 6">
-        <img src="./6.jpg" alt="证书 6 - 祁航宇">
-        <div class="caption">证书 6</div>
-      </div>
-
-      <div class="thumb" data-file="7.jpg" data-title="证书 7">
-        <img src="./7.jpg" alt="证书 7 - 祁航宇">
-        <div class="caption">证书 7</div>
-      </div>
-
-      <div class="thumb" data-file="8.jpg" data-title="证书 8">
-        <img src="./8.jpg" alt="证书 8 - 祁航宇">
-        <div class="caption">证书 8</div>
-      </div>
-    </div>
-
-    <!-- 专利 / 申请信息 （按用户提供内容整理、分节显示） -->
-    <div class="patent-block">
-      <h4>专利记录 — 砂轮片缺陷检测装置（受理信息）</h4>
-      <div class="patent-row">
-        <div class="item"><strong>申请号：</strong>2024228122352</div>
-        <div class="item"><strong>申请日：</strong>2024年11月19日</div>
-        <div class="item"><strong>申请人：</strong>河南工程学院</div>
-        <div class="item"><strong>发明人：</strong>季乐乐, 王园园, 张梦华, 汪伟, 祁航宇, 孙正阳, 孙正豪, 赵灵童</div>
-      </div>
-      <dl class="meta">
-        <dt>发明创造名称：</dt>
-        <dd>一种砂轮片缺陷检测装置</dd>
-        <dt>国家知识产权局已收文：</dt>
-        <dd>权利要求书：1份（1页，6项）；说明书：1份（5页）；说明书附图：1份（2页）；说明书摘要：1份（1页）；专利代理委托书：1份（2页）；实用新型专利请求书：1份（5页）</dd>
-        <dt>申请方案卷号：</dt>
-        <dd>yqgxa24035（由用户提供）</dd>
-      </dl>
-    </div>
-
-    <div class="patent-block">
-      <h4>专利记录 — 基于改进YOLOv11的结肠息肉检测方法（受理信息）</h4>
-      <div class="patent-row">
-        <div class="item"><strong>申请号：</strong>202510612178X</div>
-        <div class="item"><strong>申请日：</strong>2025年05月13日</div>
-        <div class="item"><strong>申请人：</strong>河南工程学院, 郑州大学, 河南省肿瘤医院</div>
-        <div class="item"><strong>发明人：</strong>王园园, 祁航宇, 谢希望, 李松阳, 张梦华, 王振龙, 马磊, 何栎, 李辉, 杨术果</div>
-      </div>
-      <dl class="meta">
-        <dt>发明创造名称：</dt>
-        <dd>一种基于改进YOLOv11的结肠息肉检测方法</dd>
-        <dt>国家知识产权局已收文：</dt>
-        <dd>权利要求书：1份（3页，10项）；说明书：1份（12页）；说明书附图：1份（4页）；说明书摘要：1份（1页）；专利代理委托书：1份（3页）；发明专利请求书：1份（5页）；实质审查请求书：1份</dd>
-        <dt>申请方案卷号：</dt>
-        <dd>202505-0604（由用户提供）</dd>
-      </dl>
-    </div>
-
-    <p class="note">注：以上信息按你提供的原文整理排版。若需把某张证书（例如 3.jpg）与上面某个专利条目明确绑定为“该图片即为申请文件扫描件”，我已在模态中默认显示详细信息（见下文示例），你也可以告诉我要把哪张图片和哪条专利精确关联，我会把标题和说明写入图片 caption 中。</p>
-
+    <h2>社交媒体</h2>
+    <h3>微信公众号</h3>
+    <p><strong>q7AGI-克里斯</strong></p>
+    <p>在公众号中，祁航宇 定期分享运动健身与 AI 研究进展，致力于用通俗语言传播技术。</p>
+    <h3>GitHub</h3>
+    <p><a href="https://github.com/qir77777">github.com/qir77777</a></p>
+    <h2>联系方式</h2>
+    <p>- <strong>微信公众号</strong>: qir77773</p>
+    <p>- <strong>GitHub</strong>: <a href="https://github.com/qir77777">github.com/qir77777</a></p>
+    <p><em>如果您对人工智能领域有兴趣，欢迎通过以上方式与 祁航宇 联系交流</em></p>
   </div>
-
-  <!-- Modal for viewing image + metadata -->
-  <div class="modal" id="modal" aria-hidden="true" role="dialog">
+  <!-- 图片模态放大器 -->
+  <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="close-btn" id="modalClose">✕</button>
-    <div class="box">
-      <div class="left"><img id="modalImg" src="" alt="证书放大图"></div>
-      <div class="right" id="modalMeta">
-        <h3 id="modalTitle">证书</h3>
-        <div id="modalDescription" class="meta"></div>
-      </div>
-    </div>
+    <img id="modalImg" src="" alt="放大图片">
   </div>
-
+  <button class="back-to-top" id="backTop">返回顶部</button>
   <script>
-    // Simple gallery modal logic
-    const gallery = document.getElementById('gallery');
-    const modal = document.getElementById('modal');
+    // 生成背景星星（保留原逻辑但数量可调整）
+    const starsContainer = document.querySelector('.stars');
+    const starCount = 80;
+    const sizes = ['small', 'medium', 'large'];
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star', sizes[Math.floor(Math.random() * sizes.length)]);
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      fragment.appendChild(star);
+    }
+    starsContainer.appendChild(fragment);
+    // 流星效果
+    function createMeteor() {
+      const meteor = document.createElement('div');
+      meteor.classList.add('meteor');
+      meteor.style.left = `${Math.random() * 100}%`;
+      meteor.style.top = `${Math.random() * 40}%`;
+      document.body.appendChild(meteor);
+      setTimeout(() => meteor.remove(), 1000);
+    }
+    setInterval(createMeteor, 2500);
+    // 图片模态逻辑：点击图片打开大图，点击遮罩或关闭按钮关闭
+    const imgModal = document.getElementById('imgModal');
     const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDescription = document.getElementById('modalDescription');
     const modalClose = document.getElementById('modalClose');
-
-    // Predefined metadata mapping for quick display (来自用户提供内容)
-    const metadata = {
-      '3.jpg': {
-        title: '重点证书 — 专利 / 扫描件（3.jpg）',
-        description: `持有人：祁航宇
-
-专利候选（示例）:
-- 申请号：2024228122352
-- 申请日：2024年11月19日
-- 申请人：河南工程学院
-- 发明人：季乐乐, 王园园, 张梦华, 汪伟, 祁航宇, 孙正阳, 孙正豪, 赵灵童
-- 发明创造名称：一种砂轮片缺陷检测装置
-
-（国家知识产权局已收：权利要求书/说明书/附图/摘要/代理书等，详见页面）`
-      },
-      '1.jpg':{title:'证书 1',description:'图片文件：1.jpg —— 持有人：祁航宇'},
-      '2.jpg':{title:'证书 2',description:'图片文件：2.jpg —— 持有人：祁航宇'},
-      '4.jpg':{title:'证书 4',description:'图片文件：4.jpg —— 持有人：祁航宇'},
-      '5.jpg':{title:'证书 5',description:'图片文件：5.jpg —— 持有人：祁航宇'},
-      '6.jpg':{title:'证书 6',description:'图片文件：6.jpg —— 持有人：祁航宇'},
-      '7.jpg':{title:'证书 7',description:'图片文件：7.jpg —— 持有人：祁航宇'},
-      '8.jpg':{title:'证书 8',description:'图片文件：8.jpg —— 持有人：祁航宇'},
-      'default':{title:'证书',description:'持有人：祁航宇'}
-    };
-
-    gallery.addEventListener('click', e => {
-      const thumb = e.target.closest('.thumb');
-      if(!thumb) return;
-      const file = thumb.getAttribute('data-file');
-      const title = thumb.getAttribute('data-title') || '证书';
-      modalImg.src = './' + file;
-      modalTitle.textContent = title;
-      const meta = metadata[file] || metadata['default'];
-      modalDescription.textContent = meta.description.replace(/\n/g,'
-');
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden','false');
-    });
-
-    function closeModal(){ modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); modalImg.src=''; }
+    function openModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = '放大 - ' + alt;
+      imgModal.classList.add('active');
+      imgModal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      imgModal.classList.remove('active');
+      imgModal.setAttribute('aria-hidden', 'true');
+      modalImg.src = '';
+    }
     modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+    imgModal.addEventListener('click', (e) => { if (e.target === imgModal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    // 附加：为profilePhoto单独添加事件（保留原有）
+    const profilePhoto = document.getElementById('profilePhoto');
+    profilePhoto.addEventListener('click', () => openModal(profilePhoto.src, profilePhoto.alt));
+    // 返回顶部
+    const backTop = document.getElementById('backTop');
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   </script>
 </body>
 </html>
