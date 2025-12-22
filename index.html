@@ -7,215 +7,105 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink-primary: #80d8ff;      /* 淡蓝色，科技感 */
-      --ink-secondary: #b0bec5;    /* 银灰色，水墨层次 */
-      --ink-accent: #0288d1;       /* 深蓝色，强调色 */
-      --paper-bg: #f5f5f5;         /* 浅灰底色，简洁现代 */
-      --text-color: #212121;       /* 深灰文本，高可读性 */
+      --ink-primary: #80d8ff;
+      --ink-secondary: #b0bec5;
+      --ink-accent: #0288d1;
+      --paper-bg: #f5f5f5;
+      --text-color: #212121;
+      --card-radius: 12px;
     }
 
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: linear-gradient(45deg, var(--paper-bg), #e0e0e0);
       font-family: 'Roboto', sans-serif;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
+      overflow-x: hidden; position: relative; min-height: 100vh;
+      color: var(--text-color);
     }
 
-    /* 水墨星空背景 */
-    .stars {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      filter: contrast(110%) brightness(120%);
-    }
-
-    .star {
-      position: absolute;
-      opacity: 0;
-      animation: ink-spread 10s infinite ease-in-out;
-      background: radial-gradient(circle at center, var(--ink-primary), transparent 70%);
-      mix-blend-mode: screen; /* 更柔和的融合效果 */
-      transform-origin: center;
-    }
-
+    /* 背景装饰（保留原有水墨星空与笔触） */
+    .stars { position: fixed; width: 100vw; height: 100vh; z-index: 1; filter: contrast(110%) brightness(120%); }
+    .star { position: absolute; opacity: 0; animation: ink-spread 10s infinite ease-in-out; background: radial-gradient(circle at center, var(--ink-primary), transparent 70%); mix-blend-mode: screen; transform-origin: center; }
     .star.small { width: 60px; height: 60px; filter: blur(2px); animation-delay: 0.5s; }
     .star.medium { width: 120px; height: 120px; filter: blur(4px); animation-delay: 1s; }
     .star.large { width: 200px; height: 200px; filter: blur(6px); animation-delay: 2s; }
+    @keyframes ink-spread { 0%{opacity:0;transform:scale(0.2) rotate(0deg);}40%{opacity:0.7;transform:scale(1) rotate(15deg);}100%{opacity:0;transform:scale(1.3) rotate(30deg);} }
+    .brush-stroke { position: fixed; pointer-events: none; background: linear-gradient(45deg, transparent 50%, var(--ink-secondary) 90%); mix-blend-mode: soft-light; animation: brush-flow 12s linear infinite; z-index: 1; }
+    @keyframes brush-flow { from { transform: translateX(-100%) skew(-10deg);} to { transform: translateX(150%) skew(-10deg);} }
 
-    @keyframes ink-spread {
-      0% { opacity: 0; transform: scale(0.2) rotate(0deg); }
-      40% { opacity: 0.7; transform: scale(1) rotate(15deg); }
-      100% { opacity: 0; transform: scale(1.3) rotate(30deg); }
+    /* 内容卡片 */
+    .content { position: relative; z-index: 3; max-width: 1000px; margin: 40px auto; padding: 30px; background: rgba(255,255,255,0.98); border-radius: var(--card-radius); box-shadow: 0 8px 40px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.08); }
+
+    /* 新的照片布局：使用 grid 在桌面端左右并列，移动端堆叠 */
+    .profile {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 18px;
     }
 
-    /* 流星效果 */
-    .meteor {
-      position: absolute;
-      width: 2px;
-      height: 100px;
-      background: linear-gradient(to bottom, var(--ink-accent), transparent);
-      animation: meteor-fall 1s linear forwards;
-      z-index: 2;
+    /* 图片样式：固定尺寸、cover、圆角、阴影、点击可放大 */
+    .profile-photo {
+      width: 220px; height: 220px; object-fit: cover; border-radius: 12px; display:block;
+      box-shadow: 0 8px 30px rgba(2,136,209,0.12); border: 1px solid rgba(2,136,209,0.06);
+      cursor: pointer; transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .profile-photo:hover { transform: scale(1.03); box-shadow: 0 14px 40px rgba(2,136,209,0.18); }
+
+    figure figcaption h1 { font-size: 1.8em; margin: 0 0 6px 0; }
+    figure figcaption p { margin: 0; color: #424242; }
+
+    /* 当屏幕较窄时：图片居中并缩小、网格变成单列 */
+    @media (max-width: 768px) {
+      .profile { grid-template-columns: 1fr; text-align: center; }
+      .profile-photo { width: 160px; height: 160px; margin: 0 auto; }
+      figure figcaption h1 { font-size: 1.6em; }
     }
 
-    @keyframes meteor-fall {
-      0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
-      100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
-    }
+    /* 轻量级图片模态放大器（lightbox） */
+    .img-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 1000; background: rgba(0,0,0,0.7); }
+    .img-modal.active { display: flex; }
+    .img-modal img { max-width: 92%; max-height: 92%; border-radius: 8px; box-shadow: 0 12px 60px rgba(0,0,0,0.6); }
+    .img-modal .close-btn { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.08); color: white; border: none; padding: 8px 10px; font-size: 18px; cursor: pointer; border-radius: 6px; }
 
-    /* 水墨笔触效果 */
-    .brush-stroke {
-      position: fixed;
-      pointer-events: none;
-      background: linear-gradient(45deg, transparent 50%, var(--ink-secondary) 90%);
-      mix-blend-mode: soft-light;
-      animation: brush-flow 12s linear infinite;
-      z-index: 1;
-    }
+    /* 其余排版保留并小幅优化 */
+    h2 { font-size: 1.6em; color: var(--ink-accent); margin-top: 30px; border-bottom: 2px solid var(--ink-accent); padding-bottom: 5px; margin-bottom: 20px; }
+    h3 { font-size: 1.2em; color: var(--text-color); }
+    p { font-size: 1.05em; line-height: 1.7; }
+    a { color: var(--ink-accent); text-decoration: none; position: relative; overflow: hidden; }
+    a::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 100%; height: 2px; background-color: var(--ink-primary); transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
+    a:hover::after { transform: translateX(0); }
 
-    @keyframes brush-flow {
-      from { transform: translateX(-100%) skew(-10deg); }
-      to { transform: translateX(150%) skew(-10deg); }
-    }
-
-    /* 内容区域 */
-    .content {
-      position: relative;
-      z-index: 3;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    h1 { font-size: 2.2em; color: var(--text-color); margin-bottom: 10px; }
-    h2 { font-size: 1.6em; color: var(--ink-accent); margin-top: 30px; }
-    h3 { font-size: 1.3em; color: var(--text-color); }
-    p { font-size: 1.1em; color: var(--text-color); line-height: 1.8; }
-    a { color: var(--ink-accent); text-decoration: none; transition: color 0.3s ease; }
-    a:hover { color: var(--ink-primary); text-decoration: underline; }
-    blockquote { font-style: italic; color: #757575; border-left: 4px solid var(--ink-accent); padding-left: 15px; }
     table { width: 100%; border-collapse: collapse; margin-top: 15px; }
     th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e0e0e0; }
     th { background: var(--paper-bg); color: var(--ink-accent); }
 
-    /* 响应式设计 */
-    @media (max-width: 768px) {
-      .content { margin: 20px; padding: 20px; }
-      h1 { font-size: 1.8em; }
-      h2 { font-size: 1.4em; }
-      p { font-size: 1em; }
-    }
-     .star {
-    /* ... 之前的样式 ... */
-    animation-delay: calc(var(--delay) * 1s); /* 使用 CSS 变量控制延迟 */
-    opacity: calc(var(--opacity) * 0.8); /* 调整基础透明度 */
-    filter: blur(calc(var(--blur) * 1px)); /* 调整模糊度 */
-  }
-
-  .stars {
-    /* ... 之前的样式 ... */
-    --star-count: 120; /* 增加星星数量 */
-  }
-
-  /* 生成更多不同尺寸和透明度的星星 */
-  .stars::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                      radial-gradient(circle, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
-    background-size: 30px 30px, 60px 60px;
-    opacity: 0.6;
-    filter: blur(1px);
-  }
-
-  /* 优化流星效果 */
-  .meteor {
-    /* ... 之前的样式 ... */
-    width: 1px; /* 更细的流星 */
-    height: 150px; /* 更长的尾巴 */
-    animation-duration: 0.8s; /* 更快的速度 */
-    opacity: 0.8; /* 更明显 */
-  }
-
-  /* 优化内容区域 */
-  .content {
-    /* ... 之前的样式 ... */
-    background: rgba(255, 255, 255, 0.98); /* 更不透明 */
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15); /* 更强的阴影 */
-    border: 1px solid rgba(0, 0, 0, 0.08); /* 更明显的边框 */
-  }
-
-  h2 {
-    border-bottom: 2px solid var(--ink-accent); /* 添加标题下划线 */
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-  }
-
-  /* 链接悬停效果优化 */
-  a {
-    /* ... 之前的样式 ... */
-    position: relative; /* 为伪元素定位 */
-    overflow: hidden; /* 隐藏溢出 */
-  }
-
-  a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px; /* 初始位置在下方 */
-    width: 100%;
-    height: 2px;
-    background-color: var(--ink-primary);
-    transform: translateX(-100%); /* 初始不可见 */
-    transition: transform 0.3s ease-in-out;
-  }
-
-  a:hover::after {
-    transform: translateX(0); /* 悬停时滑入 */
-  }
-
-  /* 返回顶部按钮示例 (需要 HTML 配合) */
-  .back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--ink-accent);
-    color: white;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-    z-index: 4; /* 确保在其他元素之上 */
-  }
-
-  .back-to-top:hover {
-    opacity: 1;
-  }
-
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--ink-accent); color: white; border-radius: 5px; padding: 10px 15px; cursor: pointer; opacity: 0.8; transition: opacity 0.3s ease; z-index: 4; }
+    .back-to-top:hover { opacity: 1; }
   </style>
 </head>
 <body>
   <div class="stars"></div>
   <div class="brush-stroke" style="top: 20%; height: 250px; width: 180px;"></div>
   <div class="brush-stroke" style="top: 60%; height: 180px; width: 120px;"></div>
+
   <div class="content">
-    <img src="./lan.jpg">
-    <h1>人工智能学者 QHY 个人简介</h1>
-    <p>AI Scholar QHY Personal Profile</p>
-    <p>研究 / 专利 / 出版物</p>
+    <!-- 改进点：把照片和标题放在同一个 figure 中，桌面端左右并列，移动端堆叠 -->
+    <figure class="profile">
+      <!-- 添加 alt、loading、并用 class 控制样式。点击会放大为模态图片 -->
+      <img class="profile-photo" id="profilePhoto" src="./lan.jpg" alt="QHY 个人照片" loading="lazy">
+
+      <figcaption>
+        <h1>人工智能学者 QHY 个人简介</h1>
+        <p>AI Scholar QHY Personal Profile — 研究 / 专利 / 出版物</p>
+        <p style="margin-top:8px; color:#616161;">QHY 专注于机器学习、深度学习和自然语言处理等领域，热爱运动与健身。</p>
+      </figcaption>
+    </figure>
+
+    <h2>研究 / 专利 / 出版物</h2>
+
     <p>
       <a href="https://github.com/qir77777">
         <img src="https://img.shields.io/badge/GitHub-qir77777-181717?style=flat&logo=github" alt="GitHub">
@@ -231,12 +121,6 @@
       </a>
     </p>
 
-    <h2>个人简介</h2>
-    <p>QHY 是一位专注于人工智能领域的学者，在 AI 技术研究与应用方面拥有丰富的经验。他的研究兴趣包括但不限于机器学习、深度学习、自然语言处理等前沿技术，运动健身。</p>
-    <blockquote>人工智能不仅是一种技术，更是一种思维方式，它将彻底改变我们与世界交互的方式。</blockquote>
-
-    <h2>研究成果</h2>
-    <p><a href="http://www.haue.edu.cn/info/1034/27254.htm">http://www.haue.edu.cn/info/1034/27254.htm</a></p>
     <h3>学术论文</h3>
     <p><a href="http://jsj.haue.edu.cn/info/1018/4026.htm">http://jsj.haue.edu.cn/info/1018/4026.htm</a></p>
     <p><strong>已发表 EI 索引论文</strong></p>
@@ -249,16 +133,16 @@
     <p><strong>发明专利</strong></p>
     <table>
       <tr><th>专利名称</th><th>专利号</th><th>授权年份</th><th>专利类型</th></tr>
-      <tr><td></td><td></td><td>2025</td><td>发明专利</td></tr>
+      <tr><td>（示例：待填写）</td><td>（示例：待填写）</td><td>2025</td><td>发明专利</td></tr>
     </table>
 
     <h2>社交媒体</h2>
     <h3>微信公众号</h3>
     <p><strong>q7AGI-克里斯</strong></p>
-    <p>在公众号中，QHY 定期分享运动健身，人工智能领域的最新研究进展、技术分析以及行业动态，致力于将复杂的 AI 概念以通俗易懂的方式传递给读者。</p>
+    <p>在公众号中，QHY 定期分享运动健身与 AI 研究进展，致力于用通俗语言传播技术。</p>
+
     <h3>GitHub</h3>
     <p><a href="https://github.com/qir77777">github.com/qir77777</a></p>
-    <p>QHY 在 GitHub 上分享了多个开源项目，涵盖了AI 应用示例，为开源社区贡献了宝贵的资源。</p>
 
     <h2>联系方式</h2>
     <p>- <strong>微信公众号</strong>: qir77773</p>
@@ -266,12 +150,19 @@
     <p><em>如果您对人工智能领域有兴趣，欢迎通过以上方式与 QHY 联系交流</em></p>
   </div>
 
+  <!-- 图片模态放大器 -->
+  <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close-btn" id="modalClose">✕</button>
+    <img id="modalImg" src="" alt="放大 - QHY 个人照片">
+  </div>
+
+  <button class="back-to-top" id="backTop">返回顶部</button>
+
   <script>
+    // 生成背景星星（保留原逻辑但数量可调整）
     const starsContainer = document.querySelector('.stars');
     const starCount = 80;
     const sizes = ['small', 'medium', 'large'];
-
-    // 生成星星
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
@@ -283,7 +174,7 @@
     }
     starsContainer.appendChild(fragment);
 
-    // 生成流星
+    // 流星效果
     function createMeteor() {
       const meteor = document.createElement('div');
       meteor.classList.add('meteor');
@@ -293,6 +184,32 @@
       setTimeout(() => meteor.remove(), 1000);
     }
     setInterval(createMeteor, 2500);
+
+    // 图片模态逻辑：点击图片打开大图，点击遮罩或关闭按钮关闭
+    const profilePhoto = document.getElementById('profilePhoto');
+    const imgModal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalClose = document.getElementById('modalClose');
+
+    profilePhoto.addEventListener('click', () => {
+      modalImg.src = profilePhoto.src;
+      imgModal.classList.add('active');
+      imgModal.setAttribute('aria-hidden', 'false');
+    });
+
+    function closeModal() {
+      imgModal.classList.remove('active');
+      imgModal.setAttribute('aria-hidden', 'true');
+      modalImg.src = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    imgModal.addEventListener('click', (e) => { if (e.target === imgModal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // 返回顶部
+    const backTop = document.getElementById('backTop');
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   </script>
 </body>
 </html>
